@@ -43,7 +43,7 @@
             resultDiv.innerHTML = 'Searching...';  // Show a loading message
 
             if (name) {
-                fetch(`https://9psk14xd13.execute-api.ap-south-1.amazonaws.com/v1/NewSearchFunction?name=food`)
+                fetch(`https://9psk14xd13.execute-api.ap-south-1.amazonaws.com/v1/NewSearchFunction?name=${encodeURIComponent(name)}`)
 		    .then(response => {
 		        console.log(response);  // Log the raw response
 		        return response.json();
