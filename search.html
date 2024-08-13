@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Function - RBR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        #searchBox {
+            width: 300px;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Reports in RBR</h1>
+    <input type="text" id="searchBox" placeholder="Enter name to search">
+    <button onclick="searchName()">Search</button>
+    <div id="result"></div>
+
+    <script>
+        function searchName() {
+            const name = document.getElementById('searchBox').value.trim();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Searching...';  // Show a loading message
+
+            if (name) {
+                fetch(`https://9psk14xd13.execute-api.ap-south-1.amazonaws.com/v1/NewSearchFunction?name=food`)
+		    .then(response => {
+		        console.log(response);  // Log the raw response
+		        return response.json();
+		    })
+		    .then(data => {
+		        if (data.status === 'found') {
+		            const matches = data.matches.map(match => `<p>${JSON.stringify(match)}</p>`).join('');
+		            resultDiv.innerHTML = `Matches found:<br>${matches}`;
+		        } else {
+		            resultDiv.innerHTML = 'No matches found.';
+		        }
+		    })
+		    .catch(error => {
+		        console.error('Error:', error);
+		        resultDiv.innerHTML = `Error occurred: ${error} with input: ${name}`;
+		    });
+
+            } else {
+                resultDiv.innerHTML = 'Please enter a name to search.';
+            }
+        }
+    </script>
+</body>
+</html>
