@@ -46,14 +46,14 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'found') {
-                        resultDiv.innerHTML = data.message;
+                        resultDiv.innerHTML = data.sentence;
                     } else {
                         resultDiv.innerHTML = 'No matches found.';
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    resultDiv.innerHTML = `Error occurred: ${error}`;
+                    resultDiv.innerHTML = 'An error occurred while searching.';
                 });
         }
     </script>
