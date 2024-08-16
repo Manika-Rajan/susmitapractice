@@ -43,15 +43,19 @@
             resultDiv.innerHTML = 'Searching...';  // Show a loading message
 
             fetch(`https://9psk14xd13.execute-api.ap-south-1.amazonaws.com/v1/NewSearchFunction?name=${encodeURIComponent(name)}`)
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'found') {
-            resultDiv.innerHTML = data.message;
-        } else {
-            resultDiv.innerHTML = data.message;
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'found') {
+                        resultDiv.innerHTML = data.message;
+                    } else {
+                        resultDiv.innerHTML = 'No matches found.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    resultDiv.innerHTML = `Error occurred: ${error}`;
+                });
         }
-    })
-    .catch(error => {
-        console.error('Error occurred:', error);
-        resultDiv.innerHTML = `Error occurred: ${error.message}`;
-    });
+    </script>
+</body>
+</html>
