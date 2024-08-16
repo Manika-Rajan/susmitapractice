@@ -32,7 +32,7 @@
 </head>
 <body>
     <h1>Search Reports in RBR</h1>
-    <input type="text" id="searchBox" placeholder="Enter name to search">
+    <input type="text" id="searchBox" placeholder="Enter industry name to search">
     <button onclick="searchName()">Search</button>
     <div id="result"></div>
 
@@ -42,12 +42,14 @@
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = 'Searching...';  // Show a loading message
 
-            fetch(https://9psk14xd13.execute-api.ap-south-1.amazonaws.com/v1/NewSearchFunction?name=${encodeURIComponent(name)})
+            // Ensure the API URL is correctly formatted
+            const apiUrl = `https://9psk14xd13.execute-api.ap-south-1.amazonaws.com/v1/NewSearchFunction?name=${encodeURIComponent(name)}`;
+
+            fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'found') {
-                        const matches = data.matches.map(match => <p>${JSON.stringify(match)}</p>).join('');
-                        resultDiv.innerHTML = Matches found:<br>${matches};
+                        resultDiv.innerHTML = `<p>${data.sentence}</p>`;
                     } else {
                         resultDiv.innerHTML = 'No matches found.';
                     }
