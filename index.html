@@ -37,39 +37,26 @@
     <div id="result"></div>
 
     <script>
-    function searchName() {
-        const name = document.getElementById('searchBox').value;
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = 'Searching...';  // Show a loading message
+        function searchName() {
+            const name = document.getElementById('searchBox').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Searching...';  // Show a loading message
 
-        fetch(`https://9psk14xd13.execute-api.ap-south-1.amazonaws.com/v1/NewSearchFunction?name=${encodeURIComponent(name)}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'found') {
-                    const match = data.matches[0];  // Assuming the first match is the one to use
-                    const industry = match[0];      // Industry name
-                    const sales = match[1];         // Sales value
-
-                    let sentence = '';
-
-                    if (industry.toLowerCase() === 'cosmetic') {
-                        sentence = `In India, the sales of the cosmetic industry is calculated to be around ${sales} million.`;
-                    } else if (industry.toLowerCase() === 'agriculture') {
-                        sentence = `In India, the sales of the agriculture industry is calculated to be around ${sales} million.`;
-                    } else if (industry.toLowerCase() === 'pharmaceutical') {
-                        sentence = `In India, the sales of the pharmaceutical industry is calculated to be around ${sales} million.`;
+            fetch(https://9psk14xd13.execute-api.ap-south-1.amazonaws.com/v1/NewSearchFunction?name=${encodeURIComponent(name)})
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'found') {
+                        const matches = data.matches.map(match => <p>${JSON.stringify(match)}</p>).join('');
+                        resultDiv.innerHTML = Matches found:<br>${matches};
                     } else {
-                        sentence = `In India, the sales of the ${industry} industry is calculated to be around ${sales} million.`;
+                        resultDiv.innerHTML = 'No matches found.';
                     }
-
-                    resultDiv.innerHTML = sentence;
-                } else {
-                    resultDiv.innerHTML = 'No matches found.';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                resultDiv.innerHTML = 'An error occurred while searching.';
-            });
-    }
-</script>
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    resultDiv.innerHTML = 'An error occurred while searching.';
+                });
+        }
+    </script>
+</body>
+</html>
