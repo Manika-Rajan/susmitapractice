@@ -42,21 +42,16 @@
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = 'Searching...';  // Show a loading message
 
-            fetch(https://9psk14xd13.execute-api.ap-south-1.amazonaws.com/v1/NewSearchFunction?name=${encodeURIComponent(name)})
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'found') {
-                        const matches = data.matches.map(match => <p>${JSON.stringify(match)}</p>).join('');
-                        resultDiv.innerHTML = Matches found:<br>${matches};
-                    } else {
-                        resultDiv.innerHTML = 'No matches found.';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    resultDiv.innerHTML = 'An error occurred while searching.';
-                });
+            fetch(`https://9psk14xd13.execute-api.ap-south-1.amazonaws.com/v1/NewSearchFunction?name=${encodeURIComponent(name)}`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'found') {
+            resultDiv.innerHTML = data.message;
+        } else {
+            resultDiv.innerHTML = 'No matches found.';
         }
-    </script>
-</body>
-</html>
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        resultDiv.innerHTML = 'An error occurred while searching.';
+    });
