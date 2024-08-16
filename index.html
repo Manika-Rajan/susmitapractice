@@ -48,10 +48,10 @@
         if (data.status === 'found') {
             resultDiv.innerHTML = data.message;
         } else {
-            resultDiv.innerHTML = 'No matches found.';
+            resultDiv.innerHTML = data.message;
         }
     })
     .catch(error => {
-        console.error('Error:', error);
-        resultDiv.innerHTML = 'An error occurred while searching.';
+        console.error('Error occurred:', error);
+        resultDiv.innerHTML = `Error occurred: ${error.message}`;
     });
