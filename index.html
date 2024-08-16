@@ -38,11 +38,15 @@
 
     <script>
         function searchName() {
-            const name = document.getElementById('searchBox').value;
+            const name = document.getElementById('searchBox').value.trim();
             const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = 'Searching...';  // Show a loading message
+            resultDiv.innerHTML = 'Searching...';
 
-            // Ensure the API URL is correctly formatted
+            if (!name) {
+                resultDiv.innerHTML = 'Please enter an industry name.';
+                return;
+            }
+
             const apiUrl = `https://9psk14xd13.execute-api.ap-south-1.amazonaws.com/v1/NewSearchFunction?name=${encodeURIComponent(name)}`;
 
             fetch(apiUrl)
